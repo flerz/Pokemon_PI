@@ -37,7 +37,14 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    
+    img_front:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    img_back:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },    
   },
   {
     timestamps: false,

@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <React.Fragment>
-        <Route exact path="/home" component={Home}/>          
         <Route exact path="/" component={LandingPage}/>
+        <Route exact path="/home" component={Home}/>
       </React.Fragment>
     </div>
   );
