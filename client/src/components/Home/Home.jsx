@@ -18,8 +18,9 @@ export default function Home() {
 	useEffect(() => {
 		dispatch(resetAll());
 		dispatch(getPokemons());
+		console.log(dispatch(getPokemons()));
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+	
 	// Filtrado y Ordenado
 	let allPokemons;
 	filterBy === 'All' && orderBy === 'Select'
@@ -38,7 +39,7 @@ export default function Home() {
 	let lastCardPerPage = page * pokemonsPerPage;
 	let firtsCardPerPage = lastCardPerPage - pokemonsPerPage;
 	let currentPageGames = allPokemons.slice(firtsCardPerPage, lastCardPerPage);
-
+	
 	return (
 		<div class='home'>
 			<div class='title'>

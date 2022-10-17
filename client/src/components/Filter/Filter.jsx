@@ -15,7 +15,7 @@ export function Filter({ paginate }) {
 
 	useEffect(() => {
 		dispatch(getTypes());
-	}, []);
+	}, []);// eslint-disable-next-line
 
 	// Filtrado por genre
 	const handleFilter = (e) => {

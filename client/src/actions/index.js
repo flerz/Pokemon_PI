@@ -20,7 +20,8 @@ export function getPokemons() {
         });
   }
   
-  export function getPokemonsById(id) {
+  export function getPokemonById(id) {
+    console.log("get ID");
     return (dispatch) =>
       fetch(`http://localhost:3001/pokemons/${id}`)
         .then((resp) => resp.json())
