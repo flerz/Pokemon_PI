@@ -11,6 +11,7 @@ function PokemonDetail({id}){
     useEffect(()=>{
         dispatch(getPokemonById(id))
     }, []);// eslint-disable-next-line
+    console.log(pokemon);
     return(
         
         <div className="full">
@@ -29,7 +30,7 @@ function PokemonDetail({id}){
                     <h4>Weight: {pokemon.weight}</h4>
                     <h4>Types: </h4>
                     {pokemon.ptypes?pokemon.ptypes.map((t)=> (
-                        <h6>{t.type.name}</h6>
+                        <h6>{t.hasOwnProperty('type')?t.type.name:t.name}</h6>
                     )):null                       
                     }
                 </div>

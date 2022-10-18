@@ -38,7 +38,6 @@ export function Filter({ paginate }) {
 			dispatch(resetFilterOrder(e.target.value));
 		}
 	};
-	console.log(types);
 	// Filtrado por API/DB
 	const handleCreator = (e) => {
 		if (e.target.value === 'API' || e.target.value === 'DB') {

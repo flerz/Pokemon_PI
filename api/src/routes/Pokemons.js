@@ -7,6 +7,8 @@ const { Pokemon, Tipo } = require('../db.js')
 router.post('/', async (req,res)=>{
     //Destructuring the data from the body
     const {name, hp, attack, defense, speed, height, weight, ptypes, img_front, img_back} = req.body
+
+    console.log(req.body); 
     //Errors handler
     try {
         //Adding the new pokemon to the DB only with the data require in the table
@@ -73,7 +75,7 @@ router.get('/', async (req,res)=>{
             //Structuring DB results in case there any at the DB
             const dbresults= pokedb?pokedb.map((p)=>{ return {id:p.dataValues.id,origin:"DB",name: p.dataValues.name, hp: p.dataValues.hp, attack: p.dataValues.attack, defense: p.dataValues.defense, speed: p.dataValues.speed, height: p.dataValues.height, weight: p.dataValues.weight,ptypes: p.dataValues.tipos, img_front: p.dataValues.img_front, img_back: p.dataValues.img_back }}):[]
             //Concatenating the results from API and DB
-            const result = dbresults.length?[...dbresults, ...pokeApi]:[...pokeApi]
+            const result = dbresults.length?[...pokeApi, ...dbresults]:[...pokeApi]
             //Response to "server"
             res.status(200).json(result)
         }else{
@@ -91,7 +93,7 @@ router.get('/', async (req,res)=>{
                 //When the result comes from DB
                 const tipos= pokedb.tipos.map((t)=>{return {id:t.dataValues.id, name: t.dataValues.name}})
                 console.log(pokedb.dataValues)
-                Object.assign(resultname ,{id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight,ptypes: tipos, img_front: pokedb.data.sprites.front_default, img_back: pokedb.data.sprites.back_default })
+                Object.assign(resultname ,{id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight,ptypes: tipos, img_front: pokedb.dataValues.img_front, img_back: pokedb.dataValues.img_back })
             }
             //Response to "server"
             res.status(200).json(resultname)
@@ -123,8 +125,9 @@ router.get('/:id', async (req,res)=>{
             const pokedb = await Pokemon.findOne({where:{id:id}, include:Tipo})
             //Structuring types
             const tipos= pokedb.tipos.map((t)=>{return {id:t.dataValues.id, name: t.dataValues.name}})
+            console.log(tipos);
             console.log(pokedb.dataValues)
-            Object.assign(resultid ,{id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight, ptypes: tipos, img_front: pokedb.data.sprites.front_default, img_back: pokedb.data.sprites.back_default })
+            Object.assign(resultid ,{id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight, ptypes: tipos, img_front: pokedb.dataValues.img_front, img_back: pokedb.dataValues.img_back })
         }
         //Response to "server"
         res.status(200).json(resultid)    

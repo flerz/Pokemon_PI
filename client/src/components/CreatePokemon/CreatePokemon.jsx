@@ -19,7 +19,7 @@ export default function Create() {
 		weight: '',
         img_front:'',
         img_back:'',
-		ptypes: [],
+		ptypes:[],
 	});
 
 	useEffect(() => {
@@ -27,8 +27,10 @@ export default function Create() {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const ChangeInput = (e) => {
+		console.log(e.target.name);
 		if (e.target.name === 'ptypes') {
 			const arr = pokemon[e.target.name];
+			
 			setPokemon({
 				...pokemon,
 				[e.target.name]: arr.concat({id:e.target.id, name:e.target.value}),
@@ -37,20 +39,20 @@ export default function Create() {
 			setPokemon({
 				...pokemon,
 				[e.target.name]: e.target.value,
+				ptypes:[],
 			});
 		}
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
+		console.log(e);
 		const obj = {
 			name: pokemon.name,
 			hp: pokemon.hp,
 			attack: pokemon.attack,
 			defense: pokemon.defense,
 			speed: pokemon.speed,
-			types: pokemon.types,
 			height: pokemon.height,
 			weight: pokemon.weight,
             img_front: pokemon.img_front,
@@ -88,12 +90,16 @@ export default function Create() {
 			alert('The weigth must be greater than 0');
 			return;
 		}
+		if(!obj.ptypes.length){
+			alert('At least one type must be selected');
+			return;
+		}
 
 		dispatch(createPokemon(obj));
 		e.target.reset();
 		alert('Pokemon added successfully!');
 		/* dispatch(getVideogames()) */
-
+		
 		setPokemon({
 			name: '',
 			hp: '',
@@ -104,9 +110,10 @@ export default function Create() {
             weight:'',
             img_front:'',
             img_back:'',
-            ptypes: [],
-			
+            ptypes:[],			
 		});
+		let checks = document.getElementsByName('ptypes')
+		checks.forEach(c=>c.checked=false)
 	};
     
 	return (
@@ -228,7 +235,7 @@ export default function Create() {
 										<div key={gen.name}>
 											<input
 												type='checkbox'
-												name='types'
+												name='ptypes'
 												value={gen.name}
 											></input>
 											<label name={gen}>{gen.name}</label>
