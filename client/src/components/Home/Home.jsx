@@ -18,7 +18,6 @@ export default function Home() {
 	useEffect(() => {
 		dispatch(resetAll());
 		dispatch(getPokemons());
-		console.log(dispatch(getPokemons()));
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 	
 	// Filtrado y Ordenado

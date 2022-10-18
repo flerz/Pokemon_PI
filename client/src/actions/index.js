@@ -21,7 +21,6 @@ export function getPokemons() {
   }
   
   export function getPokemonById(id) {
-    console.log("get ID");
     return (dispatch) =>
       fetch(`http://localhost:3001/pokemons/${id}`)
         .then((resp) => resp.json())
@@ -46,6 +45,7 @@ export function getPokemons() {
   }
   
   export function createPokemon(obj) {
+    
     return (dispatch) =>
       fetch("http://localhost:3001/pokemons", {
         method: "POST",
@@ -71,6 +71,33 @@ export function getPokemons() {
       });
     };
   };
+
+  export const resetFilterOrder = (order)=>(dispatch, getState) => {
+    const filtered = getState().filteredPokemons;
+    let pokemonsOrder = []
+    pokemonsOrder= filtered.sort((a,b)=>{
+      if (a.id > b.id) return 1;
+          if (a.id < b.id) return -1;
+          return 0;
+    })
+    console.log(pokemonsOrder);
+    dispatch({
+      type: "RESET_FILTER_ORDER",
+      payload: {
+        pokemonsOrder,
+        name: order,
+      },
+    });
+  };
+
+  export const resetFilterOrigin = () => {
+    return (dispatch) => {
+      dispatch({
+        type: "RESET_FILTER_ORIGIN",
+      });
+    };
+  };
+  
   
   
   export const filterByType = (type) => (dispatch, getState) => {
@@ -79,8 +106,8 @@ export function getPokemons() {
     if (type === "All") {
         filteredPokemons = getState().pokemons;
     } else {
-        filteredPokemons = getState().pokemons.filter((pokemon) =>
-        (pokemon.types).includes(type)
+      filteredPokemons = getState().pokemons.filter((pokemon) =>
+        (pokemon.ptypes.map((p)=> {return p.hasOwnProperty('type')?p.type.name:p.name})).includes(type)
       )
     };
     dispatch({

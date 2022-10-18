@@ -14,9 +14,13 @@ router.post('/', async (req,res)=>{
         //Iteration over every type of pokemon to add the info at the relations table named Pokemon_Tipo
         ptypes.forEach(async (t)=>{
             let poketypes = await Tipo.findOne({ where: { name: t.name } })
+            console.log(poketypes);
             //Adding the pokemon type to the relation table
-            await newpokemon.addTipo(poketypes, {through: {selfGranted: false}})
+            await newpokemon.addTipo(poketypes)
+            
         })
+        var result = await Pokemon.findOne({where:{name:name}, include:Tipo})
+        console.log(result);
         //Response to "server"
         res.status(201).json({message: "new pokemon added to the pokedex!!"})    
     } catch (error) {
@@ -64,11 +68,10 @@ router.get('/', async (req,res)=>{
             //Flow when the name wasn't given
             //Query to API
             const pokeApi = await structPokemon(await firstForty('https://pokeapi.co/api/v2/pokemon'))
-
             //Query to DB
-            const pokedb = await Pokemon.findAll()
+            const pokedb = await Pokemon.findAll({include:Tipo})
             //Structuring DB results in case there any at the DB
-            const dbresults= pokedb?pokedb.map((p)=>{ return {id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight,ptypes: tipos, img_front: pokedb.data.sprites.front_default, img_back: pokedb.data.sprites.back_default }}):[]
+            const dbresults= pokedb?pokedb.map((p)=>{ return {id:p.dataValues.id,origin:"DB",name: p.dataValues.name, hp: p.dataValues.hp, attack: p.dataValues.attack, defense: p.dataValues.defense, speed: p.dataValues.speed, height: p.dataValues.height, weight: p.dataValues.weight,ptypes: p.dataValues.tipos, img_front: p.dataValues.img_front, img_back: p.dataValues.img_back }}):[]
             //Concatenating the results from API and DB
             const result = dbresults.length?[...dbresults, ...pokeApi]:[...pokeApi]
             //Response to "server"

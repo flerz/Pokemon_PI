@@ -6,6 +6,8 @@ import {
 	orderByCreator,
 	orderAsc,
 	orderDesc,
+	resetFilterOrder,
+	resetFilterOrigin
 } from '../../actions/index';
 import './Filter.css';
 
@@ -17,7 +19,7 @@ export function Filter({ paginate }) {
 		dispatch(getTypes());
 	}, []);// eslint-disable-next-line
 
-	// Filtrado por genre
+	// Filtrado por type
 	const handleFilter = (e) => {
 		dispatch(filterByType(e.target.value));
 		paginate(e, 1);
@@ -33,17 +35,17 @@ export function Filter({ paginate }) {
 		) {
 			dispatch(orderDesc(e.target.value));
 		} else {
-			dispatch(filterByType(e.target.value));
+			dispatch(resetFilterOrder(e.target.value));
 		}
 	};
-
+	console.log(types);
 	// Filtrado por API/DB
 	const handleCreator = (e) => {
 		if (e.target.value === 'API' || e.target.value === 'DB') {
 			dispatch(orderByCreator(e.target.value));
 			paginate(e, 1);
 		} else {
-			dispatch(filterByType(e.target.value));
+			dispatch(resetFilterOrigin());
 			paginate(e, 1);
 		}
 	};
@@ -54,29 +56,30 @@ export function Filter({ paginate }) {
 				<div>Filtrado por Tipos</div>
 				<select onChange={(e) => handleFilter(e)}>
 					<option default>All</option>
-					{types.map((G) => (
-						<option value={G.name}>{G.name}</option>
-					))}
+					{types?types.map((G) => (
+						<option value={G.name} key={G.id}>{G.name}</option>
+					)):null
+					}
 				</select>
 			</div>
 			<div>
 				<div>Ordenamiento</div>
 				<select onChange={(e) => handleOrder(e)}>
-					<option value='All' default>
-						All
+					<option  default>
+						Select
 					</option>
 					<option value='asc_name'>Alphabetically (A-Z)</option>
 					<option value='desc_name'>Alphabetically (Z-A)</option>
-					<option value='asc_attack'>Rating (Lower-Higher)</option>
-					<option value='desc_attack'>Rating (Higher-Lower)</option>
+					<option value='asc_attack'>Attack (Lower-Higher)</option>
+					<option value='desc_attack'>Attack (Higher-Lower)</option>
 				</select>
 			</div>
 			<div>
 				<div>filtrado Api / Db</div>
 				<select onChange={(e) => handleCreator(e)}>
 					<option default>All</option>
-					<option value='API'>Api videogames</option>
-					<option value='DB'>User videogames</option>
+					<option value='API'>API Pokemons</option>
+					<option value='DB'>DB Pokemons</option>
 				</select>
 			</div>
 		</div>

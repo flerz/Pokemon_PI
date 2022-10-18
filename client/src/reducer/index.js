@@ -33,7 +33,7 @@ const initialState = {
       case "GET_TYPES":
         return {
           ...state,
-          type: action.payload,
+          types: action.payload,
         };
   
       case "CREATE_POKEMON":
@@ -50,6 +50,20 @@ const initialState = {
           orderBy: "Select",
           filterBy: "All",
         }
+
+      case "RESET_FILTER_ORDER":
+      return {
+        ...state,
+        filteredPokemons: action.payload.pokemonsOrder,
+        orderBy: "Select",
+      }
+
+      case "RESET_FILTER_ORIGIN":
+      return {
+        ...state,
+        
+        filterBy: "All",
+      }
   
       case "FILTER_BY_TYPE":
         return {
@@ -68,7 +82,7 @@ const initialState = {
           orderBy: action.payload.name,
         };
   
-      case "ORDER_BY_CREATOR":
+      case "ORDER_BY_ORIGIN":
       return {
         ...state,
         filteredPokemons: action.payload.pokemons,

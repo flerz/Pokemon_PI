@@ -15,7 +15,7 @@ function Card({data}){
             <div className="textCard">
                 <div className="nameTypes">
                     <div className="name">{data.name}</div>
-                    <div className="types">Types: {data.ptypes.map((t)=>(<div> {t.type.name}</div>))}
+                    <div className="types">Types: {data.ptypes.map((t)=>(<div> {t.hasOwnProperty('type')?t.type.name:t.name}</div>))}
                     </div>
                 </div>
                 <div className='divAttack'>
