@@ -8,7 +8,6 @@ router.post('/', async (req,res)=>{
     //Destructuring the data from the body
     const {name, hp, attack, defense, speed, height, weight, ptypes, img_front, img_back} = req.body
 
-    console.log(req.body); 
     //Errors handler
     try {
         //Adding the new pokemon to the DB only with the data require in the table
@@ -16,13 +15,11 @@ router.post('/', async (req,res)=>{
         //Iteration over every type of pokemon to add the info at the relations table named Pokemon_Tipo
         ptypes.forEach(async (t)=>{
             let poketypes = await Tipo.findOne({ where: { name: t.name } })
-            console.log(poketypes);
             //Adding the pokemon type to the relation table
             await newpokemon.addTipo(poketypes)
             
         })
         var result = await Pokemon.findOne({where:{name:name}, include:Tipo})
-        console.log(result);
         //Response to "server"
         res.status(201).json({message: "new pokemon added to the pokedex!!"})    
     } catch (error) {
@@ -48,6 +45,11 @@ async function firstForty(url){
     return firsthundred
 }
 
+//Function first letter to uppercase
+function firstToUppercase(string1){
+    return string1[0].toUpperCase()+string1.slice(1)
+}
+
 //Function to struct the pokemons data
 async function structPokemon(pokemons){
     let pokeInfo=[]
@@ -56,7 +58,7 @@ async function structPokemon(pokemons){
         
     }
     return pokeInfo.map((p)=>{
-        return {id:p.data.id, origin:"API",name: p.data.name, hp: p.data.stats[0].base_stat, attack: p.data.stats[1].base_stat, defense: p.data.stats[2].base_stat, speed: p.data.stats[5].base_stat, height: p.data.height, weight: p.data.weight,ptypes: p.data.types, img_front: p.data.sprites.front_default, img_back: p.data.sprites.back_default}
+        return {id:p.data.id, origin:"API",name: firstToUppercase(p.data.name), hp: p.data.stats[0].base_stat, attack: p.data.stats[1].base_stat, defense: p.data.stats[2].base_stat, speed: p.data.stats[5].base_stat, height: p.data.height, weight: p.data.weight,ptypes: p.data.types, img_front: p.data.sprites.front_default, img_back: p.data.sprites.back_default}
     })
 }
 //Getting the list of pokemons or a pokemon by name
@@ -73,7 +75,7 @@ router.get('/', async (req,res)=>{
             //Query to DB
             const pokedb = await Pokemon.findAll({include:Tipo})
             //Structuring DB results in case there any at the DB
-            const dbresults= pokedb?pokedb.map((p)=>{ return {id:p.dataValues.id,origin:"DB",name: p.dataValues.name, hp: p.dataValues.hp, attack: p.dataValues.attack, defense: p.dataValues.defense, speed: p.dataValues.speed, height: p.dataValues.height, weight: p.dataValues.weight,ptypes: p.dataValues.tipos, img_front: p.dataValues.img_front, img_back: p.dataValues.img_back }}):[]
+            const dbresults= pokedb?pokedb.map((p)=>{ return {id:p.dataValues.id,origin:"DB",name: firstToUppercase(p.dataValues.name), hp: p.dataValues.hp, attack: p.dataValues.attack, defense: p.dataValues.defense, speed: p.dataValues.speed, height: p.dataValues.height, weight: p.dataValues.weight,ptypes: p.dataValues.tipos, img_front: p.dataValues.img_front, img_back: p.dataValues.img_back }}):[]
             //Concatenating the results from API and DB
             const result = dbresults.length?[...pokeApi, ...dbresults]:[...pokeApi]
             //Response to "server"
@@ -88,12 +90,12 @@ router.get('/', async (req,res)=>{
             //Structuring result
             if(!pokedb){
                 //When the result comes from API
-                Object.assign(resultname,{id:pokeApi.data.id,origin:"API",name: pokeApi.data.name, hp: pokeApi.data.stats[0].base_stat, attack: pokeApi.data.stats[1].base_stat, defense: pokeApi.data.stats[2].base_stat, speed: pokeApi.data.stats[5].base_stat, height: pokeApi.data.height, weight: pokeApi.data.weight,ptypes: pokeApi.data.types, img_front: pokeApi.data.sprites.front_default, img_back: pokeApi.data.sprites.back_default})
+                Object.assign(resultname,{id:pokeApi.data.id,origin:"API",name: firstToUppercase(pokeApi.data.name), hp: pokeApi.data.stats[0].base_stat, attack: pokeApi.data.stats[1].base_stat, defense: pokeApi.data.stats[2].base_stat, speed: pokeApi.data.stats[5].base_stat, height: pokeApi.data.height, weight: pokeApi.data.weight,ptypes: pokeApi.data.types, img_front: pokeApi.data.sprites.front_default, img_back: pokeApi.data.sprites.back_default})
             }else{
                 //When the result comes from DB
                 const tipos= pokedb.tipos.map((t)=>{return {id:t.dataValues.id, name: t.dataValues.name}})
                 console.log(pokedb.dataValues)
-                Object.assign(resultname ,{id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight,ptypes: tipos, img_front: pokedb.dataValues.img_front, img_back: pokedb.dataValues.img_back })
+                Object.assign(resultname ,{id:pokedb.dataValues.id,origin:"DB",name: firstToUppercase( pokedb.dataValues.name), hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight,ptypes: tipos, img_front: pokedb.dataValues.img_front, img_back: pokedb.dataValues.img_back })
             }
             //Response to "server"
             res.status(200).json(resultname)
@@ -117,7 +119,7 @@ router.get('/:id', async (req,res)=>{
             //When it doesn't come as an UUID 
             //Query to API
             const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-            Object.assign(resultid,{id:pokeApi.data.id,origin:"API",name: pokeApi.data.name, hp: pokeApi.data.stats[0].base_stat, attack: pokeApi.data.stats[1].base_stat, defense: pokeApi.data.stats[2].base_stat, speed: pokeApi.data.stats[5].base_stat, height: pokeApi.data.height, weight: pokeApi.data.weight,ptypes: pokeApi.data.types, img_front: pokeApi.data.sprites.front_default, img_back: pokeApi.data.sprites.back_default})
+            Object.assign(resultid,{id:pokeApi.data.id,origin:"API",name: firstToUppercase( pokeApi.data.name), hp: pokeApi.data.stats[0].base_stat, attack: pokeApi.data.stats[1].base_stat, defense: pokeApi.data.stats[2].base_stat, speed: pokeApi.data.stats[5].base_stat, height: pokeApi.data.height, weight: pokeApi.data.weight,ptypes: pokeApi.data.types, img_front: pokeApi.data.sprites.front_default, img_back: pokeApi.data.sprites.back_default})
         }
         else{
             //When it comes as an UUID
@@ -127,7 +129,7 @@ router.get('/:id', async (req,res)=>{
             const tipos= pokedb.tipos.map((t)=>{return {id:t.dataValues.id, name: t.dataValues.name}})
             console.log(tipos);
             console.log(pokedb.dataValues)
-            Object.assign(resultid ,{id:pokedb.dataValues.id,origin:"DB",name: pokedb.dataValues.name, hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight, ptypes: tipos, img_front: pokedb.dataValues.img_front, img_back: pokedb.dataValues.img_back })
+            Object.assign(resultid ,{id:pokedb.dataValues.id,origin:"DB",name: firstToUppercase( pokedb.dataValues.name), hp: pokedb.dataValues.hp, attack: pokedb.dataValues.attack, defense: pokedb.dataValues.defense, speed: pokedb.dataValues.speed, height: pokedb.dataValues.height, weight: pokedb.dataValues.weight, ptypes: tipos, img_front: pokedb.dataValues.img_front, img_back: pokedb.dataValues.img_back })
         }
         //Response to "server"
         res.status(200).json(resultid)    

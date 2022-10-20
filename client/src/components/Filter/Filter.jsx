@@ -74,7 +74,7 @@ export function Filter({ paginate }) {
 				</select>
 			</div>
 			<div>
-				<div>filtrado Api / Db</div>
+				<div>Filtrado API / DB</div>
 				<select onChange={(e) => handleCreator(e)}>
 					<option default>All</option>
 					<option value='API'>API Pokemons</option>

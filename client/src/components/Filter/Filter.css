@@ -3,15 +3,15 @@
 .filter {
     border-color: red;
     display: flex;
-    width: 480px;
+    width: 100%;
     display: flex;
     text-align: center;
     justify-content:center;
-    font-family: 'Poppins', sans-serif;
 }
 
 .filter div {
     width: 160px;
+    margin: 1%;
 }
 
 .filter select {

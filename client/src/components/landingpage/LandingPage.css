@@ -1,10 +1,31 @@
-.background{
-    background-image: url("./background.jpg");
-    background-repeat: no-repeat;
-    background-position-x: center ;
-    height: 100%;
-    padding-bottom: 500px;
-    margin-right: 100px;
-    margin-top: 100px;
+
+
+.title h1{
+    font-size: 15vh;
+    margin: 0px;
+    padding: 0px;
 }
 
+.title h4{
+    margin: auto;
+    padding: 0%;
+}
+
+.lbutton{
+          color: white;
+          font-size: 120%;
+          border: solid 1px rgb(202, 202, 202);
+          border-radius:20px;
+          background:none;
+          margin: 5%;
+      
+}
+
+.lbutton:hover{
+    transition: all 0.8s ease;
+    color: seashell;
+      background : rgb(79,82,255);
+      cursor: pointer;
+      font-size: 125%;
+      text-shadow: 0 0 5px rgb(255, 255, 255),
+  };

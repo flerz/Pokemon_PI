@@ -1,7 +1,7 @@
 .pagination {
     position: fixed;
 	bottom: 0;
-	background: #100a1f;
+	background: rgba(14, 25, 52, 0.8);
 	width: 100%;
 	display: flex;
 	justify-content: center;

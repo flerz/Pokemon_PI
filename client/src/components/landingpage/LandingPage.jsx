@@ -9,7 +9,7 @@ export default function LandingPage() {
                 <h1>Welcome to your Henry Pokedex!!</h1>
                 <h4>Please pulse the "ENTER" button to start...</h4>
                 <Link to="/home">
-					<button class="title" type="submit">
+					<button class="lbutton" type="submit">
 						ENTER
 					</button>
                 </Link>

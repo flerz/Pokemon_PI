@@ -11,6 +11,11 @@ export const Pagination = ({ pokemonsPerPage, totalPokemons, paginate }) => {
 
   return (
     <nav className="pagination">
+      <div key='-1' className="item">
+            <button onClick={(e) => paginate(e, -1)}>
+              ◄
+            </button>
+          </div>
         {pageNumbers.map((num) => (
           <div key={num} className="item">
             <button onClick={(e) => paginate(e, num)}>
@@ -18,6 +23,11 @@ export const Pagination = ({ pokemonsPerPage, totalPokemons, paginate }) => {
             </button>
           </div>
         ))}
+        <div key='+1' className="item">
+            <button onClick={(e) => paginate(e, 1)}>
+            ►
+            </button>
+          </div>
     </nav>
   );
 };

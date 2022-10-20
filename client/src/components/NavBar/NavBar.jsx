@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-//import './Navbar.css';
+import './NavBar.css';
 
 function NavBar() {
 	const [name, setName] = useState('');
@@ -17,17 +17,17 @@ function NavBar() {
 					<h3>Inicio</h3>
 				</Link>
 			</div>
-			<div className='home'>
+			<div className='nhome'>
 				<Link to='/home'>
 					<h3>Home</h3>
 				</Link>
 			</div>
-			<div className='searchbar'>
+			<div className='nsearchbar'>
 				<form onSubmit={(e) => handleSubmit(e)}>
 					<input
 						value={name}
 						onChange={(e) => setName(e.target.value)}
-						placeholder='Search videogame...'
+						placeholder='Search pokemon...'
 						type='text'
 					></input>
 					<Link to={`/result/${name}`}>
@@ -38,12 +38,12 @@ function NavBar() {
 					</Link>
 				</form>
 			</div>
-			<div className='create'>
+			<div className='ncreate'>
 				<Link to='/create'>
 					<h3>Create</h3>
 				</Link>
 			</div>
-			<div className='about'>
+			<div className='nabout'>
 				<Link to='/about'>
 					<h3>About</h3>
 				</Link>

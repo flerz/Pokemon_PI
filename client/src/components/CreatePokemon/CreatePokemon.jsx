@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPokemon, getTypes } from '../../actions/index.js';
-//import './Create.css';
+import './CreatePokemon.css';
 
+function containsNumbers(str) {
+	return /[0-9]/.test(str);
+  }
+
+  function resetCheckbox(){
+		let checks = document.getElementsByName('ptypes')
+		checks.forEach(c=>c.checked=false)
+  }
 export default function Create() {
 	const dispatch = useDispatch();
 	const types = useSelector((store) => store.types);
@@ -64,34 +72,47 @@ export default function Create() {
 		// Validaciones
 		if (!obj.name) {
 			alert('The name is missing');
+			resetCheckbox()
 			return;
 		}
-		if (!obj.hp > 0) {
-			alert('The hp is missing.');
+		if (containsNumbers(obj.name)) {
+			alert("The name must not containt numbers.");
+			resetCheckbox()
 			return;
 		}
-        if (!obj.attack) {
-			alert('The attack is missing.');
+		if (obj.hp < 1 || obj.hp >260 ) {
+			alert('The hp must be beetwen 1 and 260.');
+			resetCheckbox()
 			return;
 		}
-		if (!obj.defense) {
-			alert('The defense is missing.');
+        if (obj.attack < 1 || obj.attack >195) {
+			alert('The attack must be beetwen 1 and 195.');
+			resetCheckbox()
 			return;
 		}
-        if (!obj.speed) {
-			alert('The speed is missing.');
+		if (obj.defense < 1 || obj.defense >235) {
+			alert('The defense must be beetwen 1 and 235.');
+			resetCheckbox()
 			return;
 		}
-		if (obj.height < 0) {
-			alert('The heigth must be greater than 0');
+        if (obj.speed < 1 || obj.speed > 185) {
+			alert('The speed must be beetwen 1 and 185.');
+			resetCheckbox()
 			return;
 		}
-        if (obj.weight < 0) {
-			alert('The weigth must be greater than 0');
+		if (obj.height <= 0 || obj.height > 100 ) {
+			alert('The heigth must be beetwen 1 and 100.');
+			resetCheckbox()
+			return;
+		}
+        if (obj.weight <= 0 || obj.weight > 100) {
+			alert('The weigth must be beetwen 1 and 100.');
+			resetCheckbox()
 			return;
 		}
 		if(!obj.ptypes.length){
 			alert('At least one type must be selected');
+			resetCheckbox()
 			return;
 		}
 
@@ -166,6 +187,8 @@ export default function Create() {
 									value={pokemon.defense}
 								></input>
 							</div>
+						</div>
+						<div className='divTitles'>
                             <div>
 								<label>-Speed-</label>
 								<input
@@ -246,7 +269,7 @@ export default function Create() {
 						</div>
 					</div>
 					<button className='button' type='submit'>
-						CREAR!
+						ADD!
 					</button>
 				</div>
 			</form>

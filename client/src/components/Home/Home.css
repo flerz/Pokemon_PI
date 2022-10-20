@@ -1,8 +1,12 @@
 .home{
-    display:flex;
+    display:block;
     flex-direction: column;
-    justify-content:space-evenly;
+    margin: 0 auto;
+    justify-content:center;
     align-items:center;
     align-content: center;
-    height: 94vh;
+    background-color: lightyellow;
+    border-radius: 20px;
 }
+
+

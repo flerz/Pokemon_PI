@@ -1,10 +1,11 @@
 .App {
   text-align: center;
- /* background-image: url(./background.jpg);*/
+  background-image: url('./components/landingpage/background.webp');
   background-size: cover;
-  min-height: 100vh;
+  height: 100%;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
+  font-family: 'Bebas Neue', cursive;
 }

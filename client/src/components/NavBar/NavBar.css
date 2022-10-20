@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;1,500;1,700&display=swap');
+
+.navBar {
+    width: 100%;
+    background: #100a1f;
+    background-image: url('../landingpage/background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navBar div {
+  width: 20%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navBar h3 {
+    text-decoration: none;
+    width: 55%;
+    height: 80%;
+    color:rgba(255, 255, 255, 255);
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.nsearchbar {
+  display: flex;
+}
+
+.nsearchbar input {
+  height: 90%;
+  background-color: white;
+  color: #000000;
+  border-radius: 5px 0px 0px 5px;
+  border: 1px solid white;
+}
+
+.nsearchbar form button {
+  height: 90%;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid white;
+  background-color: white;
+}
+
+.nsearchbar input:hover {
+  cursor: auto;
+  background-color: aquamarine;
+}
+
+.nsearchbar form button:hover {
+  cursor: pointer;
+  text-shadow:  0 5px rgba(255, 255, 255, 0.719);
+}
+
+
