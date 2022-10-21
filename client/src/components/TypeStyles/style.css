@@ -11,7 +11,7 @@
 }
 
 .icon {
-    border-radius: 10%;
+    border-radius: 10px;
     width: 110%;
     height: auto;
     padding: 0% 3%;
@@ -22,7 +22,6 @@
 .icon:hover{
     filter: saturate(200%);
     transform: scale(1.1);
-    cursor: pointer;
 }
 
 .icon img {

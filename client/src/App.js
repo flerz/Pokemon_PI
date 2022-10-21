@@ -8,6 +8,7 @@ import Create from './components/CreatePokemon/CreatePokemon.jsx';
 import Search from './components/Search/Search.jsx'
 import NavBar from './components/NavBar/NavBar.jsx';
 import About from './components/About/About.jsx';
+import NotFound from './components/NotFound/NotFound';
 function App() {
   return (
     <div className="App">
@@ -20,7 +21,8 @@ function App() {
         />
         <Route path="/create" component={NavBar}/>
         <Route exact path="/create" component={Create}/>
-        <Route path="/result/:name" component={NavBar}/>
+        <Route path="/result/" component={NavBar}/>
+        <Route exact path="/result/" component={NotFound}/>
         <Route exact path="/result/:name" component={Search}/>
         <Route path="/about" component={NavBar}/>
         <Route exact path={"/about"} component={About}/>

@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 .container{
+    
     background-image: url('background.jpg');
     background-size: cover;
+    background-color: grey;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -100,3 +102,22 @@
     background: none;
     margin: 5px;
 }
+
+.cbutton {
+    color: rgb(79, 82, 255);
+    font-size: 120%;
+    border: solid 1px rgb(202, 202, 202);
+    border-radius: 10px;
+    background:none;
+    margin: 5%;
+}
+
+.cbutton:hover {
+  transition: all 0.8s ease;
+  box-shadow: 3px 3px 1px lightblue inset;
+  color: seashell;
+    background : rgb(79,82,255);
+    cursor: pointer;
+    text-shadow: 0 0 5px rgb(255, 255, 255),
+    
+};

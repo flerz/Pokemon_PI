@@ -15,7 +15,6 @@ function Card({data}){
     else{
         tipos =[...data.ptypes]
     }
-    console.log(tipos);
 
 
 

@@ -12,7 +12,7 @@ function Search(){
     const searchPokemon = useSelector((state) => state.searchPokemonByName)
     useEffect(()=> {
         dispatch(searchPokemons(name.toLowerCase()))
-    },[])
+    },[name])
 
     return (
         <div className="full">

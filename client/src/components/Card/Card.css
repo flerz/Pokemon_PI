@@ -61,7 +61,7 @@
 	background-color: rgba(34, 0, 93, 0.671);
 	height: 20%;
 	width: auto;
-	border-radius: 50%;
+	border-radius: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;

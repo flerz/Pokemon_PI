@@ -3,10 +3,7 @@
 
 .navBar {
     width: 100%;
-    background: #100a1f;
-    background-image: url('../landingpage/background.webp');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: grey;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,6 +15,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.navBar div:hover{
+  transition: all 0.8s ease;
+    box-shadow: 3px 3px 1px lightblue inset;
 }
 
 .navBar h3 {
@@ -33,17 +35,21 @@
   display: flex;
 }
 
+div.nsearchbar:hover {
+  box-shadow: none;
+}
+
 .nsearchbar input {
-  height: 90%;
+  height: 100%;
   background-color: white;
   color: #000000;
-  border-radius: 5px 0px 0px 5px;
+  border-radius: 10px 0px 0px 10px;
   border: 1px solid white;
 }
 
 .nsearchbar form button {
   height: 90%;
-  border-radius: 0px 5px 5px 0px;
+  border-radius: 0px 10px 10px 0px;
   border: 1px solid white;
   background-color: white;
 }
@@ -51,11 +57,15 @@
 .nsearchbar input:hover {
   cursor: auto;
   background-color: aquamarine;
+  box-shadow: none;
 }
 
 .nsearchbar form button:hover {
   cursor: pointer;
   text-shadow:  0 5px rgba(255, 255, 255, 0.719);
 }
+
+
+
 
 

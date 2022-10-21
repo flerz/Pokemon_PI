@@ -268,7 +268,7 @@ export default function Create() {
 							</div>
 						</div>
 					</div>
-					<button className='button' type='submit'>
+					<button className='cbutton' type='submit'>
 						ADD!
 					</button>
 				</div>

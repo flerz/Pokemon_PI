@@ -8,11 +8,15 @@ function NavBar() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		setName('');
+		
 	}
-
+	function handleOnChange(e){
+		setName(e.target.value)
+	}
+	
 	return (
 		<div className='navBar'>
-			<div className='pokemons'>
+			<div className='nlanding'>
 				<Link to='/'>
 					<h3>Inicio</h3>
 				</Link>
@@ -26,7 +30,7 @@ function NavBar() {
 				<form onSubmit={(e) => handleSubmit(e)}>
 					<input
 						value={name}
-						onChange={(e) => setName(e.target.value)}
+						onChange={(e) => handleOnChange(e)}
 						placeholder='Search pokemon...'
 						type='text'
 					></input>
