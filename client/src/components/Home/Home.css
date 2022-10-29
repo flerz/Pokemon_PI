@@ -1,7 +1,7 @@
 .home{
     display:block;
     flex-direction: column;
-    margin: 0 auto;
+    margin: auto;
     justify-content:center;
     align-items:center;
     align-content: center;

@@ -8,6 +8,7 @@ const initialState = {
     filteredPokemons: [],
     orderBy: "Select",
     filterBy: "All",
+    originFilter:"All"
   };
   
   export default function rootReducer(state = initialState, action) {
@@ -49,6 +50,7 @@ const initialState = {
           filteredPokemons: [],
           orderBy: "Select",
           filterBy: "All",
+          originFilter: "All",
         }
 
       case "RESET_FILTER_ORDER":
@@ -61,8 +63,8 @@ const initialState = {
       case "RESET_FILTER_ORIGIN":
       return {
         ...state,
-        
-        filterBy: "All",
+        filteredPokemons: action.payload.pokemons,
+        originFilter: "All",
       }
   
       case "FILTER_BY_TYPE":
@@ -86,7 +88,7 @@ const initialState = {
       return {
         ...state,
         filteredPokemons: action.payload.pokemons,
-        filterBy: action.payload.origin,
+        originFilter: action.payload.origin,
       };
   
       default:

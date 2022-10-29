@@ -13,6 +13,7 @@ export default function Home() {
 	const filteredPokemons = useSelector((state) => state.filteredPokemons);
 	const filterBy = useSelector((state) => state.filterBy);
 	const orderBy = useSelector((state) => state.orderBy);
+	const originFilter = useSelector((state)=> state.originFilter);
 	const pokemons = useSelector((state) => state.pokemons);
 
 	useEffect(() => {
@@ -22,14 +23,20 @@ export default function Home() {
 	
 	// Filtrado y Ordenado
 	let allPokemons;
-	filterBy === 'All' && orderBy === 'Select'
+	filterBy === 'All' && orderBy === 'Select' && originFilter === "All"
 		? (allPokemons = pokemons)
 		: (allPokemons = filteredPokemons);
 
 	// Paginacion
 	function paginate(e, num) {
 		e.preventDefault();
-		setPage(num);
+		if(typeof num === "number")
+			setPage(num);
+		else if(num === "-")
+			setPage(page-1)
+		else if(num === "+")
+			setPage(page+1)
+
 	}
 
 	const [page, setPage] = useState(1);
@@ -47,7 +54,7 @@ export default function Home() {
                 <Pagination 
 				pokemonsPerPage={pokemonsPerPage}
 				totalPokemons={allPokemons.length}
-				paginate={paginate}/>
+				paginate={paginate} page={page}/>
 			</div>
 		</div>
 	);

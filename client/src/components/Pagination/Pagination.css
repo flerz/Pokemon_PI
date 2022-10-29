@@ -1,12 +1,12 @@
 .pagination {
-    position: fixed;
 	bottom: 0;
 	background: rgba(128,128,128, 0.8);
-	width: 100%;
+	width: 98%;
 	display: flex;
 	justify-content: center;
 	gap: 20px;
 	padding: 10px;
+    margin: auto;
 }
 
 .pagination button{
@@ -15,9 +15,21 @@
     color: white;
     font-size: 18px;
 }
+button[disabled]{
+    color:#c2d0d0;
+    text-decoration: underline;
+}
 
-.item button:hover {
+
+.pagination button[disabled]:hover{
+    cursor:auto;
+    font-size: 100%;
+    text-shadow: none;
+}
+
+.pagination button:hover {
     cursor: pointer;
     font-size: 130%;
     text-shadow: 0 0 5px #fff,
 }
+
