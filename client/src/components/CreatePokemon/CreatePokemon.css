@@ -60,6 +60,22 @@
     cursor: auto;
 }
 
+.warning {
+    background-color:aquamarine;
+    color:blue;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: smaller;
+    display: block;
+    width: 75%;
+    margin: auto;
+    text-align: center;
+}
+
+.warning.url{
+    width: auto;
+}
+
 .checkboxs{
     display: flex;
     flex-direction: row;
@@ -121,3 +137,4 @@
     text-shadow: 0 0 5px rgb(255, 255, 255),
     
 };
+

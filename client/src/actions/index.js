@@ -75,11 +75,11 @@ export function getPokemons() {
   export const resetFilterOrder = (order)=>(dispatch, getState) => {
     const filtered = getState().filteredPokemons;
     let pokemonsOrder = []
-    pokemonsOrder= filtered.sort((a,b)=>{
-      if (a.id > b.id) return 1;
-          if (a.id < b.id) return -1;
-          return 0;
+    pokemonsOrder= filtered.sort(function(a,b){return a.id - b.id;
     })
+    
+    const pokedb = pokemonsOrder.filter((v)=> v.origin==="DB")
+    pokemonsOrder =pokemonsOrder[0].origin === "DB"?[...pokemonsOrder.slice(pokedb.length),...pokedb]:[...pokemonsOrder]
     console.log(pokemonsOrder);
     dispatch({
       type: "RESET_FILTER_ORDER",
@@ -90,12 +90,16 @@ export function getPokemons() {
     });
   };
 
-  export const resetFilterOrigin = () => {
-    return (dispatch) => {
-      dispatch({
-        type: "RESET_FILTER_ORIGIN",
-      });
-    };
+  export const resetFilterOrigin = () =>(dispatch,getState) => {
+    const tFilter = getState().filerBy
+    const oFilter = getState().orederBy
+    const prev = getState().prevFilteredPokemons
+    dispatch({
+      type: "RESET_FILTER_ORIGIN",
+      payload:{
+        prev,
+      }
+    });
   };
   
   
@@ -125,9 +129,10 @@ export function getPokemons() {
     let pokemonsOrder = []
   
       if (type === "asc_name") {
-        pokemonsOrder = filtered.sort((a, b) => {
-          if (a.name > b.name) return 1;
-          if (a.name < b.name) return -1;
+        pokemonsOrder = filtered.sort((a,b) => {
+          
+          if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+          if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
           return 0;
         });
       } else if (type === "asc_attack") {
@@ -135,6 +140,7 @@ export function getPokemons() {
           (a, b) => a.attack - b.attack
         );
       }
+      console.log(pokemonsOrder);
       dispatch({
         type: "ORDER_ASC_ATTACK",
         payload: {
@@ -150,7 +156,9 @@ export function getPokemons() {
     let pokemonsOrder = []
       
       if (type === "desc_name") {
-        pokemonsOrder = filtered.sort((a, b) => {
+        pokemonsOrder = filtered.sort((x, y) => {
+          let a = x.name.toLowerCase()
+          let b = y.name.toLowerCase()
           if (a.name < b.name) return 1;
           if (a.name > b.name) return -1;
           return 0;
@@ -160,6 +168,7 @@ export function getPokemons() {
           (a, b) => b.attack - a.attack
         );
       }
+      //console.log(pokemonsOrder);
       dispatch({
         type: "ORDER_DESC_ATTACK",
         payload: {
@@ -171,7 +180,8 @@ export function getPokemons() {
   
   
   export const orderByCreator = (origin) => (dispatch, getState) => {
-    const pokemons = getState().pokemons.filter(function (G) {
+    let prev = getState().filteredPokemons
+    const pokemons = getState().filteredPokemons.filter(function (G) {
         return G.origin === origin
       });
     dispatch({
@@ -179,6 +189,7 @@ export function getPokemons() {
       payload: {
         pokemons,
         origin,
+        prev,
       },
     });
   };

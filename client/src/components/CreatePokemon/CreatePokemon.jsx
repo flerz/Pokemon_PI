@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createPokemon, getTypes } from '../../actions/index.js';
+import { createPokemon, getTypes, searchPokemons } from '../../actions/index.js';
 import './CreatePokemon.css';
+
+let aux= false
 
 function containsNumbers(str) {
 	return /[0-9]/.test(str);
@@ -16,6 +18,9 @@ export default function Create() {
 	const types = useSelector((store) => store.types);
 	const types1 = types.slice(0, 10);
 	const types2 = types.slice(10, 20);
+	const searchPokemon = useSelector((store)=> store.searchPokemonByName)
+
+	
 
 	const [pokemon, setPokemon] = useState({
 		name: '',
@@ -32,17 +37,19 @@ export default function Create() {
 
 	useEffect(() => {
 		dispatch(getTypes());
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+		dispatch(searchPokemons(pokemon.name.toLowerCase()))
+	}, [pokemon.name]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const ChangeInput = (e) => {
-		console.log(e.target.name);
+		console.log(aux);
 		if (e.target.name === 'ptypes') {
 			const arr = pokemon[e.target.name];
-			
+			aux=true
 			setPokemon({
 				...pokemon,
 				[e.target.name]: arr.concat({id:e.target.id, name:e.target.value}),
 			});
+			console.log(aux);
 		} else {
 			setPokemon({
 				...pokemon,
@@ -53,8 +60,11 @@ export default function Create() {
 	};
 
 	const handleSubmit = (e) => {
+		if(searchPokemon){
+			alert("There is already a pokemon with name "+pokemon.name)
+		}
+		else{
 		e.preventDefault();
-		console.log(e);
 		const obj = {
 			name: pokemon.name,
 			hp: pokemon.hp,
@@ -115,12 +125,18 @@ export default function Create() {
 			resetCheckbox()
 			return;
 		}
+		if(!obj.img_front){
+			alert('There must be atleast the front image');
+			resetCheckbox()
+			return;
+		}
 
 		dispatch(createPokemon(obj));
 		e.target.reset();
 		alert('Pokemon added successfully!');
 		/* dispatch(getVideogames()) */
-		
+	}
+	
 		setPokemon({
 			name: '',
 			hp: '',
@@ -133,8 +149,10 @@ export default function Create() {
             img_back:'',
             ptypes:[],			
 		});
+		aux=false
 		let checks = document.getElementsByName('ptypes')
 		checks.forEach(c=>c.checked=false)
+	
 	};
     
 	return (
@@ -153,6 +171,7 @@ export default function Create() {
 						<div className='divTitles'>
 							<div>
 								<label>-Name-</label>
+								{searchPokemon.hasOwnProperty("name")?<span className="warning">Pokemon already exist</span>:<></>}
 								<input
 									className='label'
 									type='text'
@@ -162,6 +181,7 @@ export default function Create() {
 							</div>
 							<div>
 								<label>-hp-</label>
+								{(pokemon.hp<1||pokemon.hp>260)&& pokemon.hp!==''?<span className="warning">Invalid HP</span>:<></>}
 								<input
 									className='label'
 									type='number'
@@ -171,6 +191,7 @@ export default function Create() {
 							</div>
 							<div>
 								<label>-Attack-</label>
+								{(pokemon.attack<1||pokemon.attack>195)&& pokemon.attack!==''?<span className="warning">Invalid Attack</span>:<></>}
 								<input
 									className='label'
 									type='number'
@@ -180,6 +201,7 @@ export default function Create() {
 							</div>
 							<div>
 								<label>-Defense-</label>
+								{(pokemon.defense<1||pokemon.defense>235)&& pokemon.defense!==''?<span className="warning">Invalid Defense</span>:<></>}
 								<input
 									className='label'
 									type='number'
@@ -191,6 +213,7 @@ export default function Create() {
 						<div className='divTitles'>
                             <div>
 								<label>-Speed-</label>
+								{(pokemon.speed<1||pokemon.speed>185)&& pokemon.speed!==''?<span className="warning">Invalid Speed</span>:<></>}
 								<input
 									className='label'
 									type='number'
@@ -200,6 +223,7 @@ export default function Create() {
 							</div>
                             <div>
 								<label>-Height-</label>
+								{(pokemon.height<=0||pokemon.height>100)&& pokemon.height!==''?<span className="warning">Invalid Height</span>:<></>}
 								<input
 									className='label'
 									type='number'
@@ -209,6 +233,7 @@ export default function Create() {
 							</div>
                             <div>
 								<label>-Weight-</label>
+								{(pokemon.weight<=0||pokemon.weight>100) && pokemon.weight!==''?<span className="warning">Invalid Weight</span>:<></>}
 								<input
 									className='label'
 									type='number'
@@ -219,6 +244,7 @@ export default function Create() {
 						</div>
 						<div className='imagediv'>
 							<label>-Image Front URL-</label>
+							{pokemon.img_front==="" && aux?<span className="warning url">Invalid image</span>:<></>}
 							<input
 								className='imagein'
 								type='text'

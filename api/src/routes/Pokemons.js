@@ -10,18 +10,24 @@ router.post('/', async (req,res)=>{
 
     //Errors handler
     try {
-        //Adding the new pokemon to the DB only with the data require in the table
-        const newpokemon = await Pokemon.create({name:name, hp:hp, attack:attack, defense:defense, speed:speed, height:height, weight:weight, img_front:img_front, img_back:img_back})
-        //Iteration over every type of pokemon to add the info at the relations table named Pokemon_Tipo
-        ptypes.forEach(async (t)=>{
-            let poketypes = await Tipo.findOne({ where: { name: t.name } })
-            //Adding the pokemon type to the relation table
-            await newpokemon.addTipo(poketypes)
-            
-        })
-        var result = await Pokemon.findOne({where:{name:name}, include:Tipo})
-        //Response to "server"
-        res.status(201).json({message: "new pokemon added to the pokedex!!"})    
+        const pokeCheck = await Pokemon.findOne({where:{name:name}})
+        if(pokeCheck){
+            res.status(200).json({message:"Pokemon Already exist"})
+        }
+        else{
+            //Adding the new pokemon to the DB only with the data require in the table
+            const newpokemon = await Pokemon.create({name:name, hp:hp, attack:attack, defense:defense, speed:speed, height:height, weight:weight, img_front:img_front, img_back:img_back})
+            //Iteration over every type of pokemon to add the info at the relations table named Pokemon_Tipo
+            ptypes.forEach(async (t)=>{
+                let poketypes = await Tipo.findOne({ where: { name: t.name } })
+                //Adding the pokemon type to the relation table
+                await newpokemon.addTipo(poketypes)
+                
+            })
+            var result = await Pokemon.findOne({where:{name:name}, include:Tipo})
+            //Response to "server"
+            res.status(201).json({message: "New pokemon added to the pokedex!!"})    
+    }
     } catch (error) {
         res.status(400).json({error:error.message})
     }
@@ -101,7 +107,7 @@ router.get('/', async (req,res)=>{
             res.status(200).json(resultname)
         }    
     } catch (error) {
-        res.status(404).json({error: error.message, message: "Pokemon's name do not exist"})
+        res.status(404).json({error: error.message, message: `Pokemon's name '${name}' do not exist`})
     }
     
 })

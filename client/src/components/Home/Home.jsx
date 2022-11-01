@@ -22,10 +22,10 @@ export default function Home() {
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 	
 	// Filtrado y Ordenado
-	let allPokemons;
+	let allPokemons=[];
 	filterBy === 'All' && orderBy === 'Select' && originFilter === "All"
-		? (allPokemons = pokemons)
-		: (allPokemons = filteredPokemons);
+		? (allPokemons = [...pokemons])
+		: (allPokemons = [...filteredPokemons]);
 
 	// Paginacion
 	function paginate(e, num) {

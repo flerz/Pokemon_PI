@@ -8,7 +8,6 @@ export const Pagination = ({ pokemonsPerPage, totalPokemons, paginate, page }) =
   for (let i = 1; i <= numOfPages ; i++) {
     pageNumbers.push(i);
   }
-  console.log(page);
 
   return (
     <div className="pagination">
