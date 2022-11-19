@@ -6,7 +6,7 @@ const {
 
 export function getPokemons() {
     return function (dispatch) {
-      return fetch(`${REACT_APP_API}/pokemons`)
+      return fetch(`https://henrypokemon-pi.herokuapp.com/pokemons`)
         .then(response => response.json())
         .then(json => {
           dispatch({ type: "GET_POKEMONS", payload: json });
@@ -16,7 +16,7 @@ export function getPokemons() {
   
   export function searchPokemons(name) {
     return (dispatch) =>
-      fetch(`${REACT_APP_API}/pokemons?name=${name}`)
+      fetch(`https://henrypokemon-pi.herokuapp.com/pokemons?name=${name}`)
         .then((resp) => resp.json())
         .then((json) => {
           dispatch({
@@ -28,7 +28,7 @@ export function getPokemons() {
   
   export function getPokemonById(id) {
     return (dispatch) =>
-      fetch(`${REACT_APP_API}/pokemons/${id}`)
+      fetch(`https://henrypokemon-pi.herokuapp.com/pokemons/${id}`)
         .then((resp) => resp.json())
         .then((json) => {
           dispatch({
@@ -40,7 +40,7 @@ export function getPokemons() {
   
   export function getTypes() {
     return (dispatch) =>
-      fetch(`${REACT_APP_API}/types`)
+      fetch(`https://henrypokemon-pi.herokuapp.com/types`)
         .then((resp) => resp.json())
         .then((json) => {
           dispatch({
@@ -53,7 +53,7 @@ export function getPokemons() {
   export function createPokemon(obj) {
     
     return (dispatch) =>
-      fetch(`${REACT_APP_API}/pokemons`, {
+      fetch(`https://henrypokemon-pi.herokuapp.com/pokemons`, {
         method: "POST",
         headers: {
           Accept: "application/json",
