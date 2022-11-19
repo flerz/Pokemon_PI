@@ -1,6 +1,12 @@
+import dotenv from "dotenv";
+
+const {
+  REACT_APP_API
+} = process.env;
+
 export function getPokemons() {
     return function (dispatch) {
-      return fetch(`http://localhost:3001/pokemons`)
+      return fetch(`${REACT_APP_API}/pokemons`)
         .then(response => response.json())
         .then(json => {
           dispatch({ type: "GET_POKEMONS", payload: json });
@@ -10,7 +16,7 @@ export function getPokemons() {
   
   export function searchPokemons(name) {
     return (dispatch) =>
-      fetch(`http://localhost:3001/pokemons?name=${name}`)
+      fetch(`${REACT_APP_API}/pokemons?name=${name}`)
         .then((resp) => resp.json())
         .then((json) => {
           dispatch({
@@ -22,7 +28,7 @@ export function getPokemons() {
   
   export function getPokemonById(id) {
     return (dispatch) =>
-      fetch(`http://localhost:3001/pokemons/${id}`)
+      fetch(`${REACT_APP_API}/pokemons/${id}`)
         .then((resp) => resp.json())
         .then((json) => {
           dispatch({
@@ -34,7 +40,7 @@ export function getPokemons() {
   
   export function getTypes() {
     return (dispatch) =>
-      fetch(`http://localhost:3001/types`)
+      fetch(`${REACT_APP_API}/types`)
         .then((resp) => resp.json())
         .then((json) => {
           dispatch({
@@ -47,7 +53,7 @@ export function getPokemons() {
   export function createPokemon(obj) {
     
     return (dispatch) =>
-      fetch("http://localhost:3001/pokemons", {
+      fetch(`${REACT_APP_API}/pokemons`, {
         method: "POST",
         headers: {
           Accept: "application/json",
