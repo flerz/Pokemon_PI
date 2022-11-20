@@ -1,3 +1,9 @@
+import dotenv from "dotenv";
+
+const {
+  REACT_APP_API
+} = process.env;
+
 export function getPokemons() {
     return function (dispatch) {
       return fetch(`https://henrypokemon-pi.herokuapp.com/pokemons`)

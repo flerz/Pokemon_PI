@@ -2,8 +2,8 @@ import React from 'react';
 import reactlogo from './images/react.svg';
 import reduxlogo from './images/redux.svg';
 import postgrelogo from './images/postgresql.svg';
-import sequelizelogo from './images/sequelize.png';
-import expresslogo from './images/express.png';
+import sequelizelogo from './images/sequelize.svg';
+import expresslogo from './images/express.svg';
 import './About.css';
 
 function About() {
