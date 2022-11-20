@@ -3,7 +3,7 @@
 
 .navBar {
     width: 100%;
-    background: grey;
+    background-color: grey;
     display: flex;
     align-items: center;
     justify-content: center;
