@@ -19,7 +19,7 @@ function Card({data}){
 
 
     return (
-        <div className="Pcard" >
+        <div className="Pcard">
             <Link to={`/pokemon/${data.id}`}>
                 {data.img_front === null || !data.img_front ?(
                     <NotFound image={'noimage'}/>
